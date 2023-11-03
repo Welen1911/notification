@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -39,8 +40,8 @@ class Contact extends Mailable
     public function content(): Content
     {
         return new Content(
-            // html: 'mails.contact',
-            text: 'mails.contact_text',
+            html: 'mails.contact',
+            // text: 'mails.contact_text',
         );
     }
 
@@ -51,6 +52,13 @@ class Contact extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $files = $this->data['attachments'];
+        $attachments = [];
+
+        foreach($files as $attachment) {
+            array_push($attachments, Attachment::fromPath($attachment->getPathName())->as(uniqid().$attachment->getClientOriginalExtension())
+            ->withMime($attachment->getMimeType()));
+        }
+        return $attachments;
     }
 }

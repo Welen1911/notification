@@ -29,12 +29,13 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+
         Mail::to('welenalmeida2210@gmail.com', 'Welen')->send(new Contact([
             'fromName' => $request->name,
             'fromEmail' => $request->email,
             'fromSubject' => $request->subject,
             'fromMessage' => $request->message,
-
+            'attachments' => $request->file('files'),
         ]));
 
         dd("Deu certo!");

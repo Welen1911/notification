@@ -101,7 +101,7 @@
 </head>
 
 <body>
-    <form action="{{ route('contact.store') }}" method="post">
+    <form action="{{ route('contact.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container-contact100">
             <div class="wrap-contact100">
@@ -128,8 +128,12 @@
                         </label>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Message is required">
-                        <textarea class="input100" name="message" placeholder="Your message..." style="height: 606px;"></textarea>
+                        <textarea class="input100" name="message" placeholder="Your message..." style="height: 206px;"></textarea>
                     </div>
+                    <div class="wrap-input100 validate-input" data-validate="subject is required">
+                        <input type="file" name="files[]" multiple>
+                    </div>
+
                     <div class="container-contact100-form-btn">
                         <div class="wrap-contact100-form-btn">
                             <div class="contact100-form-bgbtn"></div>
